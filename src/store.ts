@@ -1,7 +1,8 @@
-import { createStore, Store } from "redux";
+import { applyMiddleware, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducer from "./reducer";
+import { saga, sagaMiddleware } from "./saga";
 import { Actions, State } from "./types";
 
 const initialState: State = {
@@ -13,7 +14,9 @@ const initialState: State = {
 const store: Store<State, Actions> = createStore(
   reducer,
   initialState,
-  composeWithDevTools()
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+
+sagaMiddleware.run(saga);
 
 export default store;

@@ -6,6 +6,7 @@ import {
   CounterStoredState,
   DECREMENT_COUNTER,
   INCREMENT_COUNTER,
+  RESET_COUNTER,
 } from "../types";
 
 const initialState: CounterState = {
@@ -29,6 +30,11 @@ const reducer: Reducer<CounterState, CounterActions> = (
       return {
         ...state,
         value: state.value - action.payload.step
+      };
+    case RESET_COUNTER:
+      return {
+        ...state,
+        value: 0
       };
     default:
       return state;

@@ -1,25 +1,25 @@
 import * as React from "react";
 import { Button, Card, Icon } from "semantic-ui-react";
 
-export interface Props {
-  readonly step: number;
-  readonly threshold: number;
-  readonly onThresholdReached: (counter: number) => void;
+export interface PropsFromState {
+  readonly counter: number;
+}
+
+export interface PropsFromDispatch {
+  readonly onIncrement: (step: number) => void;
+  readonly onDecrement: (step: number) => void;
+}
+
+interface Props extends PropsFromState, PropsFromDispatch {
+  step: number;
 }
 
 const Counter: React.FunctionComponent<Props> = ({
+  counter,
   step,
-  threshold,
-  onThresholdReached
+  onIncrement,
+  onDecrement
 }) => {
-  const [counter, setCounter] = React.useState(0);
-
-  React.useEffect(() => {
-    if (counter >= threshold) {
-      onThresholdReached(counter);
-    }
-  }, [counter, onThresholdReached, threshold]);
-
   return (
     <Card>
       <Card.Content>
@@ -29,13 +29,13 @@ const Counter: React.FunctionComponent<Props> = ({
       <Card.Content extra>
         <div className="ui two buttons">
           <Button
-            onClick={() => setCounter(counter + step)}
+            onClick={() => onIncrement(step)}
             basic
             color="green"
             icon={<Icon name="plus" />}
           />
           <Button
-            onClick={() => setCounter(counter - step)}
+            onClick={() => onDecrement(step)}
             basic
             color="red"
             icon={<Icon name="minus" />}

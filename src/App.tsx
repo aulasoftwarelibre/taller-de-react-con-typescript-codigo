@@ -7,7 +7,7 @@ import Counter from "./counter/components/counter";
 const App: React.FunctionComponent = () => {
   return (
     <Body>
-      <Counter />
+      <Counter step={3} />
     </Body>
   );
 };

@@ -3,6 +3,7 @@ import { Reducer } from "redux";
 import {
   CounterActions,
   CounterState,
+  CounterStoredState,
   DECREMENT_COUNTER,
   INCREMENT_COUNTER,
 } from "../types";
@@ -10,6 +11,9 @@ import {
 const initialState: CounterState = {
   value: 0
 };
+
+export const getCounterState = (store: CounterStoredState): CounterState =>
+  store.counter;
 
 const reducer: Reducer<CounterState, CounterActions> = (
   state = initialState,

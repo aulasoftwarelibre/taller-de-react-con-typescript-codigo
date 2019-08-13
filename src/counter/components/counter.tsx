@@ -1,25 +1,17 @@
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, Icon } from "semantic-ui-react";
 
-export interface PropsFromState {
-  readonly counter: number;
-}
+import { decrementCounter, incrementCounter } from "../actions";
+import { getCounterState } from "../reducers";
+import { CounterState } from "../types";
 
-export interface PropsFromDispatch {
-  readonly onIncrement: (step: number) => void;
-  readonly onDecrement: (step: number) => void;
-}
+export type Props = { step: number };
 
-interface Props extends PropsFromState, PropsFromDispatch {
-  step: number;
-}
+const Counter: React.FunctionComponent<Props> = ({ step }) => {
+  const dispatch = useDispatch();
+  const { value: counter }: CounterState = useSelector(getCounterState);
 
-const Counter: React.FunctionComponent<Props> = ({
-  counter,
-  step,
-  onIncrement,
-  onDecrement
-}) => {
   return (
     <Card>
       <Card.Content>
@@ -29,13 +21,13 @@ const Counter: React.FunctionComponent<Props> = ({
       <Card.Content extra>
         <div className="ui two buttons">
           <Button
-            onClick={() => onIncrement(step)}
+            onClick={() => dispatch(incrementCounter(step))}
             basic
             color="green"
             icon={<Icon name="plus" />}
           />
           <Button
-            onClick={() => onDecrement(step)}
+            onClick={() => dispatch(decrementCounter(step))}
             basic
             color="red"
             icon={<Icon name="minus" />}

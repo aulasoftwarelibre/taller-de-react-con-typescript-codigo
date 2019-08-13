@@ -2,13 +2,13 @@ import * as React from "react";
 import { Container } from "semantic-ui-react";
 import styled from "styled-components";
 
-import Counter from "./counter/containers/counter";
+import Counter from "./counter/components/counter";
 
 const App: React.FunctionComponent = () => {
   return (
     <Body>
-      <Counter step={1} />
       <Counter step={2} />
+      <Counter step={1} />
     </Body>
   );
 };

@@ -2,8 +2,14 @@ import * as React from "react";
 import { Container } from "semantic-ui-react";
 import styled from "styled-components";
 
+import Counter from "./counter/components/counter";
+
 const App: React.FunctionComponent = () => {
-  return <Body>Hello world</Body>;
+  return (
+    <Body>
+      <Counter />
+    </Body>
+  );
 };
 
 const Body = styled(Container)`

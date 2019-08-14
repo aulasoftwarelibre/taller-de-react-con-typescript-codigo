@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Button, Card, Icon } from "semantic-ui-react";
 
-interface Props {
+export interface Props {
+  readonly step: number;
   readonly threshold: number;
   readonly onThresholdReached: (counter: number) => void;
 }
 
 const Counter: React.FunctionComponent<Props> = ({
+  step,
   threshold,
   onThresholdReached
 }) => {
@@ -27,13 +29,13 @@ const Counter: React.FunctionComponent<Props> = ({
       <Card.Content extra>
         <div className="ui two buttons">
           <Button
-            onClick={() => setCounter(counter + 1)}
+            onClick={() => setCounter(counter + step)}
             basic
             color="green"
             icon={<Icon name="plus" />}
           />
           <Button
-            onClick={() => setCounter(counter - 1)}
+            onClick={() => setCounter(counter - step)}
             basic
             color="red"
             icon={<Icon name="minus" />}

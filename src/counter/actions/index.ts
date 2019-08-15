@@ -9,6 +9,12 @@ import {
   INCREMENT_COUNTER_ASYNC,
   IncrementCounterAction,
   IncrementCounterAsyncAction,
+  INIT_COUNTER_FAILURE,
+  INIT_COUNTER_REQUEST,
+  INIT_COUNTER_SUCCESS,
+  InitCounterFailureAction,
+  InitCounterRequestAction,
+  InitCounterSuccessAction,
   RESET_COUNTER,
   RESET_COUNTER_ASYNC,
   ResetCounterAction,
@@ -59,4 +65,25 @@ export const resetCounterAsync: ActionCreator<
   ResetCounterAsyncAction
 > = () => ({
   type: RESET_COUNTER_ASYNC
+});
+
+export const initCounterRequest: ActionCreator<
+  InitCounterRequestAction
+> = () => ({
+  type: INIT_COUNTER_REQUEST
+});
+
+export const initCounterSuccess: ActionCreator<InitCounterSuccessAction> = (
+  value: number
+) => ({
+  type: INIT_COUNTER_SUCCESS,
+  payload: {
+    value
+  }
+});
+
+export const initCounterFailure: ActionCreator<
+  InitCounterFailureAction
+> = () => ({
+  type: INIT_COUNTER_FAILURE
 });

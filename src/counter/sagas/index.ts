@@ -8,14 +8,24 @@ import {
   takeLatest,
 } from "redux-saga/effects";
 
-import { decrementCounter, incrementCounter } from "../actions";
+import {
+  decrementCounter,
+  incrementCounter,
+  initCounterFailure,
+  initCounterRequest,
+  initCounterSuccess,
+} from "../actions";
+import { readCounter, updateCounter } from "../api";
 import { getCounterState } from "../reducers";
 import {
   CounterState,
+  DECREMENT_COUNTER,
   DECREMENT_COUNTER_ASYNC,
   DecrementCounterAsyncAction,
+  INCREMENT_COUNTER,
   INCREMENT_COUNTER_ASYNC,
   IncrementCounterAsyncAction,
+  RESET_COUNTER,
   RESET_COUNTER_ASYNC,
 } from "../types";
 
@@ -63,10 +73,42 @@ function* watchDecrementCounterAsync() {
   yield takeEvery(DECREMENT_COUNTER_ASYNC, handleDecrementCounterAsync);
 }
 
+function* handleUpdateCounter() {
+  try {
+    const { value: counter }: CounterState = yield select(getCounterState);
+
+    yield updateCounter(counter);
+  } catch (e) {}
+}
+
+function* watchUpdateCounter() {
+  yield takeLatest(
+    [INCREMENT_COUNTER, DECREMENT_COUNTER, RESET_COUNTER],
+    handleUpdateCounter
+  );
+}
+
+function* handleInitCounter() {
+  yield put(initCounterRequest());
+  yield delay(1000);
+
+  try {
+    const {
+      data: { value }
+    }: { data: { value: number } } = yield readCounter();
+
+    yield put(initCounterSuccess(value));
+  } catch (e) {
+    yield put(initCounterFailure());
+  }
+}
+
 export function* saga() {
   yield all([
     fork(watchIncrementCounterAsync),
     fork(watchDecrementCounterAsync),
-    fork(watchHandleResetCounterAsync)
+    fork(watchHandleResetCounterAsync),
+    fork(watchUpdateCounter),
+    fork(handleInitCounter)
   ]);
 }

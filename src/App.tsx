@@ -3,12 +3,14 @@ import { Container } from "semantic-ui-react";
 import styled from "styled-components";
 
 import Counter from "./counter/components/counter";
+import Loader from "./loader/components/loader";
 
 const App: React.FunctionComponent = () => {
   return (
     <Body>
-      <Counter step={2} />
-      <Counter step={1} />
+      <Loader>
+        <Counter step={1} />
+      </Loader>
     </Body>
   );
 };

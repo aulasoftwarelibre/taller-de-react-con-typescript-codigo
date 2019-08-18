@@ -8,6 +8,10 @@ import { Actions, State } from "./types";
 const initialState: State = {
   counter: {
     value: 0
+  },
+  loader: {
+    isLoading: false,
+    hasError: false
   }
 };
 
